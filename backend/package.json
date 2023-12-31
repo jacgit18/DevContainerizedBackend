@@ -2,11 +2,195 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "engines": {
+    "node": ">=20.9.0",
+    "npm": ">=10.1.0"
   },
+  "main": "src/app.ts",
+  "scripts": {
+    "start": "nodemon ./build/src/serve.js",
+    "build": "npm run clean && npm run compile-ts",
+    "cbs": "npm run build && npm run start",
+    "dev": "npm run clean && npm run compile-ts-watch-mode & npm run start",
+    "clean": "rm -rf build",
+    "compile-ts": "tsc --project ./",
+    "compile-ts-watch-mode": "tsc -w --project ./",
+    "lint": "eslint . --ext .ts",
+    "create-migration": "npx knex migrate:make",
+    "migrate-up": "npx knex migrate:latest",
+    "test-db-setup": "sh ./scripts/test_db_setup.sh",
+    "db-setup": "sh ./scripts/db_setup.sh",
+    "test": "npm run build && export FOR_TESTING=y && mocha --exit",
+    "test:coverage": "jest --coverage",
+    "prettier-format": "prettier --config .prettierrc 'src/**/*.ts' --write",
+    "pre-push": "npm test"
+  },
+  "tsconfig": "tsconfig.json",
+  "type": "module",
+  "types": "ts",
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "@sendgrid/mail": "^8.1.0",
+    "axios": "^1.6.2",
+    "body-parser": "^1.19.0",
+    "chalk": "^4.1.1",
+    "cookie-parser": "~1.4.4",
+    "cors": "^2.8.5",
+    "debug": "^4.3.1",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "express-validator": "^6.12.0",
+    "http-errors": "~1.6.3",
+    "jsonwebtoken": "^9.0.2",
+    "knex": "^3.1.0",
+    "morgan": "~1.9.1",
+    "net": "^1.0.2",
+    "pg": "^8.7.3",
+    "pug": "^3.0.2",
+    "semver": "^7.5.4",
+    "simple-update-notifier": "^2.0.0",
+    "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.14.5",
+    "@babel/core": "^7.14.6",
+    "@babel/node": "^7.14.7",
+    "@babel/plugin-transform-runtime": "^7.14.5",
+    "@babel/preset-env": "^7.14.7",
+    "@babel/preset-typescript": "^7.23.2",
+    "@types/cors": "^2.8.12",
+    "@types/express": "^4.17.13",
+    "@types/jsonwebtoken": "^9.0.5",
+    "@types/mocha": "^10.0.6",
+    "@types/morgan": "^1.9.3",
+    "@types/node": "^20.10.5",
+    "@types/uuid": "^9.0.7",
+    "@typescript-eslint/eslint-plugin": "^5.52.0",
+    "@typescript-eslint/parser": "^5.52.0",
+    "babel-jest": "^29.7.0",
+    "chai": "^5.0.0",
+    "chai-http": "^4.4.0",
+    "eslint": "^7.29.0",
+    "eslint-config-prettier": "^8.6.0",
+    "eslint-plugin-eslint-snake-case": "0.0.6",
+    "eslint-plugin-unicorn": "^34.0.0",
+    "mocha": "^10.2.0",
+    "nodemon": "^3.0.2",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^2.3.2",
+    "sql-fixtures": "^1.0.4",
+    "ts-node": "^10.8.1",
+    "typescript": "^5.3.3"
+  },
+  "nodemonConfig": {
+    "watch": [
+      "src"
+    ],
+    "ext": "ts",
+    "ignore": [
+      "src/**/*.test.ts"
+    ],
+    "execMap": {
+      "ts": "node -r ts-node/register"
+    }
+  },
+  "eslintConfig": {
+    "ignorePatterns": [
+      "build/**"
+    ],
+    "env": {
+      "es2021": true,
+      "mocha": true,
+      "node": true
+    },
+    "extends": [
+      "eslint:recommended",
+      "plugin:unicorn/recommended",
+      "./.eslintrc.ts",
+      "plugin:@typescript-eslint/recommended",
+      "prettier"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+      "ecmaVersion": 2022,
+      "sourceType": "module"
+    },
+    "plugins": [
+      "eslint-snake-case",
+      "@typescript-eslint",
+      "unicorn"
+    ],
+    "root": true,
+    "rules": {
+      "func-style": "off",
+      "semi": [
+        "error",
+        "never"
+      ],
+      "no-async-promise-executor": 0,
+      "no-unused-vars": "warn",
+      "unicorn/filename-case": [
+        "error",
+        {
+          "case": "camelCase"
+        }
+      ],
+      "unicorn/better-regex": "error",
+      "unicorn/catch-error-name": "off",
+      "unicorn/consistent-function-scoping": "error",
+      "unicorn/custom-error-definition": "off",
+      "unicorn/error-message": "error",
+      "unicorn/escape-case": "error",
+      "unicorn/expiring-todo-comments": "off",
+      "unicorn/explicit-length-check": "error",
+      "unicorn/import-style": "error",
+      "unicorn/new-for-builtins": "error",
+      "unicorn/no-abusive-eslint-disable": "error",
+      "unicorn/no-array-instanceof": "error",
+      "unicorn/no-console-spaces": "error",
+      "unicorn/no-fn-reference-in-iterator": "error",
+      "unicorn/no-for-loop": "error",
+      "unicorn/no-hex-escape": "error",
+      "unicorn/no-keyword-prefix": "off",
+      "unicorn/no-nested-ternary": "error",
+      "unicorn/no-new-buffer": "error",
+      "unicorn/no-null": "off",
+      "unicorn/no-object-as-default-parameter": "error",
+      "unicorn/no-process-exit": "error",
+      "unicorn/no-reduce": "error",
+      "unicorn/no-unreadable-array-destructuring": "error",
+      "unicorn/no-unsafe-regex": "off",
+      "unicorn/no-unused-properties": "warn",
+      "unicorn/no-useless-undefined": "error",
+      "unicorn/no-zero-fractions": "error",
+      "unicorn/number-literal-case": "error",
+      "unicorn/prefer-add-event-listener": "error",
+      "unicorn/prefer-array-find": "error",
+      "unicorn/prefer-dataset": "error",
+      "unicorn/prefer-event-key": "error",
+      "unicorn/prefer-flat-map": "error",
+      "unicorn/prefer-includes": "error",
+      "unicorn/prefer-modern-dom-apis": "error",
+      "unicorn/prefer-negative-index": "error",
+      "unicorn/prefer-node-append": "error",
+      "unicorn/prefer-node-remove": "error",
+      "unicorn/prefer-number-properties": "error",
+      "unicorn/prefer-optional-catch-binding": "error",
+      "unicorn/prefer-query-selector": "error",
+      "unicorn/prefer-reflect-apply": "error",
+      "unicorn/prefer-replace-all": "off",
+      "unicorn/prefer-set-has": "error",
+      "unicorn/prefer-spread": "error",
+      "unicorn/prefer-starts-ends-with": "error",
+      "unicorn/prefer-string-slice": "error",
+      "unicorn/prefer-text-content": "error",
+      "unicorn/prefer-trim-start-end": "error",
+      "unicorn/prefer-type-error": "error",
+      "unicorn/string-content": "off",
+      "unicorn/throw-new-error": "error",
+      "unicorn/prevent-abbreviations": "off"
+    }
+  }
 }
