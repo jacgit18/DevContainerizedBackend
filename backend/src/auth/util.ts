@@ -1,4 +1,4 @@
-import { db } from "../data/db.js"
+import { db } from "../data/db.js";
 
 
 export interface AccessInfo {
@@ -12,15 +12,14 @@ export interface AdminAccess {
 
 export function adminAccess(userId: string): Promise<AdminAccess[]> {
   return db('tf_admin')
-    .select(db.raw('tf_admin.tfuser_id AS id, TRUE AS is_admin'))
-    .where('tf_admin.tfuser_id', userId)
+    .select(db.raw('tf_admin.appuser_id AS id, TRUE AS is_admin'))
+    .where('tf_admin.appuser_id', userId)
     .andWhere(db.raw('tf_admin.deleted_at IS NULL'))
 }
 
 export async function userIsTfAdmin(user_id: string): Promise<boolean> {
   const adminStatus = await adminAccess(user_id)
-  return !! adminStatus[0]?.is_admin
-  // return adminStatus[0]?.is_admin ?? false;
+  return adminStatus[0]?.is_admin ?? false;
 
 }
 
@@ -42,8 +41,8 @@ export async function companyAccess(userId: string, companyId?: string): Promise
         cu.company_id,
         c.company_type,
         cur.code AS company_user_role
-      FROM tfuser u
-      INNER JOIN company_user cu ON cu.tfuser_id = u.id
+      FROM appuser u
+      INNER JOIN company_user cu ON cu.appuser_id = u.id
       INNER JOIN company_user_role cur ON cur.id = cu.company_user_role_id
       INNER JOIN company c ON c.id = cu.company_id
       WHERE u.id = ?

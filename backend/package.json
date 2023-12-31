@@ -101,7 +101,7 @@
       "build/**"
     ],
     "env": {
-      "es2021": true,
+      "es2020": true,
       "mocha": true,
       "node": true
     },
@@ -114,7 +114,7 @@
     ],
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
-      "ecmaVersion": 2022,
+      "ecmaVersion": 2020,
       "sourceType": "module"
     },
     "plugins": [

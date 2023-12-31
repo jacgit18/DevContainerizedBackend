@@ -3,6 +3,6 @@ import { JwtUserInfo } from "../auth/jwtUtil.js"
 
 export type TfRequest = express.Request & {
   user: JwtUserInfo,
-  // token: string,
+  token: string,
   company_id: string,
 }

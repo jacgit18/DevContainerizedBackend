@@ -1,5 +1,5 @@
-import knex from "knex"
 import express from "express"
+import knex from "knex"
 
 import config from "../config/config.js"
 
@@ -16,7 +16,7 @@ interface PerformanceMonitoringItem {
   route?: string,
   query_params?: any,
   body?: any,
-  tfuser_id?: string,
+  appuser?: string,
   company_id?: string,
   res_status?: number,
   // alerts update
@@ -94,7 +94,7 @@ export class PerformanceMonitoringService {
         pmItem.query_params = req.query
       }
       if (!!req.user?.id) {
-        pmItem.tfuser_id = req.user?.id
+        pmItem.appuser = req.user?.id
       }
       // this is a weird thing the frontend does if we dont prevent it, can cause this to crash
       if (!!req.company_id && req.company_id !== 'null') {

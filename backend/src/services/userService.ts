@@ -1,7 +1,6 @@
 import { v4 as createUuid } from "uuid"
 import { db } from "../data/db.js"
 import { userData } from "../data/index.js"
-import authService from "./authService.js"
 
 // async function sendNewUserEmail(createdUser: any, inviter: any, company_id: string){
 //     const userName = `${createdUser.first_name} ${createdUser.last_name}`
