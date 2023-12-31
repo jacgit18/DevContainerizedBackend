@@ -20,6 +20,8 @@ export function adminAccess(userId: string): Promise<AdminAccess[]> {
 export async function userIsTfAdmin(user_id: string): Promise<boolean> {
   const adminStatus = await adminAccess(user_id)
   return !! adminStatus[0]?.is_admin
+  // return adminStatus[0]?.is_admin ?? false;
+
 }
 
 type CompanyUserRole = 'admin' | 'super' | 'crew'

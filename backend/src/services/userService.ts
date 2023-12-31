@@ -30,19 +30,8 @@ async function createUser(user: any, companyUser: any, inviter: any): Promise<an
   return createdUser
 }
 
-async function getCompanyUsers(company_id: string): Promise<any[]> {
-  return userData.getCompanyUsers(company_id)
-}
-
-async function updatePasswordAndLogin(email: string, newPassword: string): Promise<any[]> {
-  // update password then generate new credentials
-  await userData.updatePassword(email, newPassword)
-  return await authService.createJwtForAuthenticatedUser({ email, password: newPassword })
-}
 
 
 export default {
   createUser,
-  getCompanyUsers,
-  updatePasswordAndLogin,
 }
