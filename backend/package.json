@@ -18,6 +18,7 @@
     "lint": "eslint . --ext .ts",
     "create-migration": "npx knex migrate:make",
     "migrate-up": "npx knex migrate:latest",
+    "migrate-down": "npx knex migrate:rollback",
     "test-db-setup": "sh ./scripts/test_db_setup.sh",
     "db-setup": "sh ./scripts/db_setup.sh",
     "test": "npm run build && export FOR_TESTING=y && mocha --exit",
