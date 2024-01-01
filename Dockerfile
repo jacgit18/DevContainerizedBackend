@@ -30,6 +30,10 @@ RUN npm install --only=production
 # Expose the port the app runs on
 EXPOSE 3000
 
+# Health check
+HEALTHCHECK --interval=30s --timeout=3s \
+  CMD curl -fs http://localhost:3000/health || exit 1
+
 # Define the default command to run your application
 CMD ["node", "/backend/build/src/serve.js"]
 
