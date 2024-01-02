@@ -9,6 +9,9 @@ COPY backend/package*.json ./
 # Install project dependencies
 RUN npm install
 
+# Install nodemon globally
+RUN npm install -g nodemon
+
 # Copy the rest of the application code from backend folder to the container
 COPY backend .
 
@@ -21,6 +24,7 @@ FROM node:slim
 WORKDIR /backend
 
 # Copy only the necessary files from the builder stage
+COPY --from=builder /usr/local/lib/node_modules /usr/local/lib/node_modules
 COPY --from=builder /backend/build /backend/build
 COPY --from=builder /backend/package*.json ./
 
@@ -28,14 +32,15 @@ COPY --from=builder /backend/package*.json ./
 RUN npm install --only=production
 
 # Expose the port the app runs on
-EXPOSE 3000
+EXPOSE 8081
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=3s \
   CMD curl -fs http://localhost:3000/health || exit 1
 
 # Define the default command to run your application
-CMD ["node", "/backend/build/src/serve.js"]
+CMD ["npx", "nodemon", "./build/src/serve.js"]
+
 
 
 # docker build -t backendserver:0.1 .

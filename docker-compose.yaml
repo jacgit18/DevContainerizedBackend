@@ -1,0 +1,32 @@
+version: '1.0'
+services:
+  postgres:
+    image: postgres:latest
+    ports:
+      - "5432:5432" 
+    environment:
+        POSTGRES_USER: process.env.DB_USER
+        POSTGRES_PASSWORD: process.env.DB_PASSWORD
+        POSTGRES_Pro_DB: process.env.DB_NAME
+        POSTGRES_Test_DB: process.env.TEST_DB_NAME
+
+  server: 
+    build: 
+      context: .
+      dockerfile: ./backend/Dockerfile
+    volumes: 
+      - './backend:/usr/app/backend'
+      - /usr/backend/node_modules
+    command: npm run docker_dev
+    ports:
+      - "8000:8000"
+    depends_on: 
+      - postgres
+    environment:
+      PORT: 8000
+      NODE_ENV: "docker"
+      CHOKIDAR_USEPOLLING: "true"
+    # If all else fails: SKIP_PREFLIGHT_CHECK: "true"
+      PROXY: "http://server:8000"
+      SKIP_PREFLIGHT_CHECK: "true"
+      # CHOKIDAR_USEPOLLING: "true"
