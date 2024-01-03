@@ -1,4 +1,4 @@
-version: '1.0'
+version: '3.5'
 services:
   postgres:
     image: postgres:latest
@@ -13,17 +13,19 @@ services:
   server: 
     build: 
       context: .
-      dockerfile: ./backend/Dockerfile
+      dockerfile: ./Dockerfile
+      # dockerfile: ./backend/Dockerfile
+
     volumes: 
       - './backend:/usr/app/backend'
       - /usr/backend/node_modules
     command: npm run docker_dev
     ports:
-      - "8000:8000"
+      - "8080:8081"
     depends_on: 
       - postgres
     environment:
-      PORT: 8000
+      PORT: 8080
       NODE_ENV: "docker"
       CHOKIDAR_USEPOLLING: "true"
     # If all else fails: SKIP_PREFLIGHT_CHECK: "true"
