@@ -45,6 +45,7 @@ HEALTHCHECK --interval=30s --timeout=3s \
 
 # Define the default command to run your application
 CMD ["npx", "nodemon", "./build/src/serve.js", "&&", "npm", "run" "migrate-up"]
+# CMD ["npx", "nodemon", "./build/src/serve.js"]
 
 
 
