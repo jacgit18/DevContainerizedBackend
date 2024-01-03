@@ -19,6 +19,7 @@ const server = app.listen(Number(port), "0.0.0.0", () => {
   const address = server.address() as AddressInfo;
 
   if (address) {
+    console.log("ADDRESS ", address)
     console.log(chalk.green.bold.underline(`Server is up & listening at http://localhost:8080...`))
   } else {
     console.error("Failed to retrieve server address.");
