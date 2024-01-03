@@ -12,6 +12,7 @@
     "build": "npm run clean && npm run compile-ts",
     "cbs": "npm run build && npm run start",
     "dev": "npm run clean && npm run compile-ts-watch-mode & npm run start",
+    "docker_dev": "nodemon --legacy-watch ./api/app.js",
     "clean": "rm -rf build",
     "compile-ts": "tsc --project ./",
     "compile-ts-watch-mode": "tsc -w --project ./",
