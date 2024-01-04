@@ -14,6 +14,10 @@ RUN npm install -g nodemon
 
 RUN npm install -g knex
 
+RUN npm install -g typescript
+
+# RUN npm install -g ts-node
+
 
 # Copy the rest of the application code from backend folder to the container
 COPY backend .
@@ -44,8 +48,8 @@ HEALTHCHECK --interval=30s --timeout=3s \
   CMD curl -fs http://localhost:3000/health || exit 1
 
 # Define the default command to run your application
-CMD ["npx", "nodemon", "./build/src/serve.js", "&&", "npm", "run" "migrate-up"]
-# CMD ["npx", "nodemon", "./build/src/serve.js"]
+# CMD ["npx", "nodemon", "./build/src/serve.js", "&&", "npm", "run" "migrate-up"]
+CMD ["npx", "nodemon", "./build/src/serve.js"]
 
 
 
