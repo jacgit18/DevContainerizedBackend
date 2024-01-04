@@ -1,4 +1,3 @@
-
 /**
  * @param { import("knex").Knex } knex
  * @returns { Promise<void> }
@@ -11,6 +10,7 @@ export const up = function(knex) {
       table.index(["appuser_id"])
       table.timestamp('deleted_at')
     })
+    
   }
   
   /**
@@ -21,3 +21,7 @@ export const up = function(knex) {
     return knex.schema.dropTable('app_admin')
   }
   
+
+
+
+
