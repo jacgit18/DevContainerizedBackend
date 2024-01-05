@@ -16,16 +16,11 @@ RUN npm install -g knex
 
 RUN npm install -g typescript
 
-# RUN npm install -g ts-node
-
-
 # Copy the rest of the application code from backend folder to the container
 COPY backend .
 
 # Build the TypeScript project
 RUN npm run build
-
-# RUN npm run migrate-up -- --env production
 
 # Stage 2: Create a lightweight container with only the necessary files and the built JavaScript files
 FROM node:slim
@@ -33,12 +28,18 @@ FROM node:slim
 WORKDIR /backend
 
 # Copy only the necessary files from the builder stage
-COPY --from=builder /usr/local/lib/node_modules /usr/local/lib/node_modules
 COPY --from=builder /backend/build /backend/build
-COPY --from=builder /backend/package*.json ./
+COPY --from=builder /backend/package*.json /backend/tsconfig.json ./
 
 # Install production dependencies
-RUN npm install --only=production
+RUN npm install
+
+# Proably excludes dev dependcies and typescript is included in that
+# RUN npm install --only=production 
+
+# RUN npm run migrate-up
+
+
 
 # Expose the port the app runs on
 EXPOSE 8081
@@ -48,9 +49,9 @@ HEALTHCHECK --interval=30s --timeout=3s \
   CMD curl -fs http://localhost:3000/health || exit 1
 
 # Define the default command to run your application
-# CMD ["npx", "nodemon", "./build/src/serve.js", "&&", "npm", "run" "migrate-up"]
 CMD ["npx", "nodemon", "./build/src/serve.js"]
 
+# CMD ["npx", "nodemon", "./build/src/serve.js", "&&", "npm", "run" "migrate-up"]
 
 
 
