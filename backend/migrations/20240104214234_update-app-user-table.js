@@ -3,7 +3,7 @@ const User = [
       email: 'joshuaxcarpentier@gmail.com',
       first_name: 'joshua',
       last_name: 'car',
-      password: 'abc123',
+      password: 'abc123', // plain text 
       date_created: new Date(),
       date_modified: new Date()
     }
