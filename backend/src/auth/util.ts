@@ -11,10 +11,10 @@ export interface AdminAccess {
 }
 
 export function adminAccess(userId: string): Promise<AdminAccess[]> {
-  return db('tf_admin')
-    .select(db.raw('tf_admin.appuser_id AS id, TRUE AS is_admin'))
-    .where('tf_admin.appuser_id', userId)
-    .andWhere(db.raw('tf_admin.deleted_at IS NULL'))
+  return db('app_admin')
+    .select(db.raw('app_admin.appuser_id AS id, TRUE AS is_admin'))
+    .where('app_admin.appuser_id', userId)
+    .andWhere(db.raw('app_admin.deleted_at IS NULL'))
 }
 
 export async function userIsTfAdmin(user_id: string): Promise<boolean> {

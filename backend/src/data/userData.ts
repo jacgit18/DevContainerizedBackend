@@ -12,7 +12,7 @@ async function getCompanyUsers(company_id: string): Promise<any[]> {
 
 async function createUser(userObject: any): Promise<any> {
   const createdUsers = await db.raw(`
-      INSERT INTO tfuser (email, password, first_name, last_name, phone, avatar_url, date_created, date_modified)
+      INSERT INTO appuser (email, password, first_name, last_name, phone, avatar_url, date_created, date_modified)
       VALUES (
         :email,
         crypt(:password, gen_salt('md5')),

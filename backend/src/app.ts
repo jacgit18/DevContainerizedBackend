@@ -29,8 +29,6 @@ app.use(companyIdFromHeaders)
 app.use( "/v2", routes.authRouter)
 
 
-// app.use("/v2", authenticateToken, routes.userRouter)
-// app.use("/v2", authenticateToken, routes.materialRouter)
 
 
 
