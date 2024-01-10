@@ -33,12 +33,9 @@ COPY --from=builder /backend/package*.json /backend/tsconfig.json ./
 
 # Install production dependencies
 RUN npm install
-
 # Proably excludes dev dependcies and typescript is included in that
-# RUN npm install --only=production 
-
-# RUN npm run migrate-up
-
+# RUN npm install --only=production
+RUN npx knex migrate:latest
 
 
 # Expose the port the app runs on
@@ -51,8 +48,15 @@ HEALTHCHECK --interval=30s --timeout=3s \
 # Define the default command to run your application
 CMD ["npx", "nodemon", "./build/src/serve.js"]
 
+
+
+
 # CMD ["npx", "nodemon", "./build/src/serve.js", "&&", "npm", "run" "migrate-up"]
 
+
+
+
+# RUN npm run migrate-up
 
 
 
@@ -77,4 +81,8 @@ CMD ["npx", "nodemon", "./build/src/serve.js"]
 
 # next build
 # docker build -t backendserver:0.2 .
+
+# Access container 
+# docker exec -it container-id /bin/bash
+
 

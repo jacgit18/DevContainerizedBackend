@@ -7,14 +7,14 @@ services:
     environment:
         POSTGRES_USER: process.env.DB_USER
         POSTGRES_PASSWORD: process.env.DB_PASSWORD
-        POSTGRES_Pro_DB: process.env.DB_NAME
+        POSTGRES_DB: process.env.DB_NAME
         POSTGRES_Test_DB: process.env.TEST_DB_NAME
 
   server: 
     build: 
       context: .
       dockerfile: ./backend/Dockerfile
-
+# bind mount is happening here so when enter the container and makes changes they reflect locally
     volumes: 
       - './backend:/usr/app/backend'
       - /usr/backend/node_modules
@@ -27,7 +27,5 @@ services:
       PORT: 8080
       NODE_ENV: "docker"
       CHOKIDAR_USEPOLLING: "true"
-    # If all else fails: SKIP_PREFLIGHT_CHECK: "true"
-      PROXY: "http://server:8000"
-      SKIP_PREFLIGHT_CHECK: "true"
-      # CHOKIDAR_USEPOLLING: "true"
+      # If all else fails: SKIP_PREFLIGHT_CHECK: "true"
+      # SKIP_PREFLIGHT_CHECK: "true"
