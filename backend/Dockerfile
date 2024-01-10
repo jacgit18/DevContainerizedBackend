@@ -18,6 +18,10 @@ COPY backend .
 # Build the TypeScript project
 RUN npm run build
 
+# Navigate to the build directory NEW STEP ADDED
+WORKDIR /backend/build
+
+# Run the migration command within the build directory
 # Part of the build Stage not a runtime operation which would be below in other stage
 RUN npx knex migrate:latest
 
@@ -47,7 +51,6 @@ HEALTHCHECK --interval=30s --timeout=3s \
 
 # Define the default command to run your application
 CMD ["npx", "nodemon", "./build/src/serve.js"]
-
 
 
 
@@ -82,7 +85,7 @@ CMD ["npx", "nodemon", "./build/src/serve.js"]
 # next build
 # docker build -t backendserver:0.2 .
 
-# Access container 
+# Access container
 # docker exec -it container-id /bin/bash
 
 
