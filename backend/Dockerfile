@@ -9,12 +9,8 @@ COPY backend/package*.json ./
 # Install project dependencies
 RUN npm install
 
-# Install nodemon globally
-RUN npm install -g nodemon
-
-RUN npm install -g knex
-
-RUN npm install -g typescript
+# Install nodemon, knex, & typescript globally
+RUN npm install -g nodemon knex typescript
 
 # Copy the rest of the application code from backend folder to the container
 COPY backend .
