@@ -3,25 +3,26 @@ services:
   postgres:
     image: postgres:latest
     ports:
-      - "5432:5432" 
+      - "5432:5432"
+    restart: always
     environment:
         POSTGRES_USER: process.env.DB_USER
         POSTGRES_PASSWORD: process.env.DB_PASSWORD
         POSTGRES_DB: process.env.DB_NAME
         POSTGRES_Test_DB: process.env.TEST_DB_NAME
 
-  server: 
-    build: 
+  server:
+    build:
       context: .
       dockerfile: ./backend/Dockerfile
 # bind mount is happening here so when enter the container and makes changes they reflect locally
-    volumes: 
+    volumes:
       - './backend:/usr/app/backend'
       - /usr/backend/node_modules
-    command: npm run build 
+    command: npm run build
     ports:
       - "8080:8081"
-    depends_on: 
+    depends_on:
       - postgres
     environment:
       PORT: 8080
