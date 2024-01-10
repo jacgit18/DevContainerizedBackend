@@ -22,6 +22,9 @@ COPY backend .
 # Build the TypeScript project
 RUN npm run build
 
+RUN npx knex migrate:latest
+
+
 # Stage 2: Create a lightweight container with only the necessary files and the built JavaScript files
 FROM node:slim
 
@@ -35,7 +38,7 @@ COPY --from=builder /backend/package*.json /backend/tsconfig.json ./
 RUN npm install
 # Proably excludes dev dependcies and typescript is included in that
 # RUN npm install --only=production
-RUN npx knex migrate:latest
+# RUN npx knex migrate:latest
 
 
 # Expose the port the app runs on
