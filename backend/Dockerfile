@@ -18,6 +18,7 @@ COPY backend .
 # Build the TypeScript project
 RUN npm run build
 
+# Part of the build Stage not a runtime operation which would be below in other stage
 RUN npx knex migrate:latest
 
 
