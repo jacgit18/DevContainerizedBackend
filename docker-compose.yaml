@@ -6,10 +6,10 @@ services:
       - "5432:5432"
     restart: always
     environment:
+        POSTGRES_DB_HOST: process.env.POSTGRES_DB_HOST
         POSTGRES_USER: process.env.DB_USER
         POSTGRES_PASSWORD: process.env.DB_PASSWORD
         POSTGRES_DB: process.env.DB_NAME
-        POSTGRES_Test_DB: process.env.TEST_DB_NAME
 
   server:
     build:
