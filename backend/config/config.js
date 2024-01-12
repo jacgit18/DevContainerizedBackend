@@ -24,7 +24,7 @@ const config = {
     auth: authenticationUrl,
     domain: process.env.BASE_URL,
   },
-  SENDGRID_API_KEY: process.env.SENDGRID_API_KEY,
+  SENDGRID_API_KEY: process.env.SENDGRID_API_KEY, // not in use yet
   standardDbConfig: {
     client: "pg",
     connection: {
