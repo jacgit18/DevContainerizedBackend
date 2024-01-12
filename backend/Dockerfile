@@ -49,8 +49,7 @@ EXPOSE 8081
 HEALTHCHECK --interval=30s --timeout=3s \
   CMD curl -fs http://localhost:8081/health || exit 1
 
-# Define the default command to run your application
-CMD ["npx", "nodemon", "./build/src/serve.js"]
+ENTRYPOINT ["npx", "nodemon", "./build/src/serve.js"]
 
 
 
