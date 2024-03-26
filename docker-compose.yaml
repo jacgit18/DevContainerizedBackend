@@ -1,32 +1,63 @@
 version: '3.5'
 services:
+  server:
+    container_name: server
+    image: josh/server_app:1.0.0
+    build:
+      context: .
+      dockerfile: ./backend/Dockerfile
+    volumes:
+      - './backend:/usr/app/backend'
+      - '/usr/backend/node_modules'
+    command: npm run build
+    ports:
+      - "8080:8081"
+    environment:
+      # - DATABASE_URL: postgresql://postgres:postgres@postgres_DB:5432/postgres
+      # - DATABASE_USERNAME: postgres
+      # - DATABASE_PASSWORD: postgres
+      PORT: 8080
+      NODE_ENV: "docker"
+      CHOKIDAR_USEPOLLING: "true"
+    depends_on:
+      - postgres
+
   postgres:
+    container_name: postgres_DB
     image: postgres:latest
     ports:
       - "5432:5432"
     restart: always
+    env_file:
+      - backend/.env
     environment:
-        POSTGRES_DB_HOST: process.env.POSTGRES_DB_HOST
-        POSTGRES_USER: process.env.DB_USER
-        POSTGRES_PASSWORD: process.env.DB_PASSWORD
-        POSTGRES_DB: process.env.DB_NAME
-
-  server:
-    build:
-      context: .
-      dockerfile: ./backend/Dockerfile
-# bind mount is happening here so when enter the container and makes changes they reflect locally
+        POSTGRES_USER: postgres
+        POSTGRES_PASSWORD: postgres
+        POSTGRES_DB: postgres
     volumes:
-      - './backend:/usr/app/backend'
-      - /usr/backend/node_modules
-    command: npm run build
-    ports:
-      - "8080:8081"
-    depends_on:
-      - postgres
-    environment:
-      PORT: 8080
-      NODE_ENV: "docker"
-      CHOKIDAR_USEPOLLING: "true"
+       - pgdata:/var/lib/postgresql/data
+
+
+
+volumes:
+  pgdata: {}
+
+#   server:
+    # build:
+    #   context: .
+    #   dockerfile: ./backend/Dockerfile
+# bind mount is happening here so when enter the container and makes changes they reflect locally
+    # volumes:
+    #   - './backend:/usr/app/backend'
+    #   - /usr/backend/node_modules
+    # command: npm run build
+    # ports:
+    #   - "8080:8081"
+    # depends_on:
+    #   - postgres
+    # environment:
+    #   PORT: 8080
+    #   NODE_ENV: "docker"
+    #   CHOKIDAR_USEPOLLING: "true"
       # If all else fails: SKIP_PREFLIGHT_CHECK: "true"
       # SKIP_PREFLIGHT_CHECK: "true"

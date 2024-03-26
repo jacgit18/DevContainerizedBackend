@@ -32,7 +32,7 @@ const config = {
       port: process.env.DB_PORT,
       user: process.env.DB_USER,
       password: process.env.DB_PASSWORD,
-      database: process.env.TEST_DB_NAME, // put dbName back after
+      database: process.env.DB_NAME, // put dbName back after
     },
   },
   forApiAlerts: 'forApiAlerts',

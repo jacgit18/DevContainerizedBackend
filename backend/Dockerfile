@@ -15,15 +15,21 @@ RUN npm install -g nodemon knex typescript
 # Copy the rest of the application code from backend folder to the container
 COPY backend .
 
+# Copy migration files might not be necessary
+COPY backend/migrations /backend/migrations
+
+# Run the migration command within the build directory
+# Part of the build Stage not a runtime operation which would be below in other stage
+
+# RUN npx knex migrate:latest
+RUN npx knex migrate:latest --knexfile /backend/knexfile.js --cwd /backend
+
+
 # Build the TypeScript project
 RUN npm run build
 
 # Navigate to the build directory NEW STEP ADDED
 WORKDIR /backend/build
-
-# Run the migration command within the build directory
-# Part of the build Stage not a runtime operation which would be below in other stage
-RUN npx knex migrate:latest
 
 
 # Stage 2: Create a lightweight container with only the necessary files and the built JavaScript files
