@@ -22,7 +22,8 @@ COPY backend/migrations /backend/migrations
 # Part of the build Stage not a runtime operation which would be below in other stage
 
 # RUN npx knex migrate:latest
-RUN npx knex migrate:latest --knexfile /backend/knexfile.js --cwd /backend
+# Bug to fix
+# RUN npx knex migrate:latest --knexfile /backend/knexfile.js --cwd /backend
 
 
 # Build the TypeScript project
