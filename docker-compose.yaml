@@ -1,5 +1,20 @@
 version: '3.9'
 services:
+  postgres:
+    container_name: postgres_DB
+    image: postgres:latest
+    ports:
+      - "5432:5432"
+    restart: always
+    env_file:
+      - backend/.env
+    environment:
+        POSTGRES_USER: postgres
+        POSTGRES_PASSWORD: postgres
+        POSTGRES_DB: postgres
+    volumes:
+       - pgdata:/var/lib/postgresql/data
+  
   server:
     container_name: server
     image: josh/server_app:1.0.0
@@ -37,20 +52,6 @@ services:
     depends_on:
       - server
 
-  postgres:
-    container_name: postgres_DB
-    image: postgres:latest
-    ports:
-      - "5432:5432"
-    restart: always
-    env_file:
-      - backend/.env
-    environment:
-        POSTGRES_USER: postgres
-        POSTGRES_PASSWORD: postgres
-        POSTGRES_DB: postgres
-    volumes:
-       - pgdata:/var/lib/postgresql/data
 
 
 
