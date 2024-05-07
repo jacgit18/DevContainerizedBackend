@@ -8,6 +8,9 @@ import * as routes from "./routers/index.js"
 import config from "../config/config.js"
 import { initPerformanceMonitoring } from "../libs/monitoring.js"
 import { companyIdFromHeaders, convertQueryOperators } from "./middlewares/index.js"
+// import { authenticateToken,  } from "./middlewares/index.js"
+
+
 
 const app = express()
 // NOTE: must be first
@@ -26,7 +29,12 @@ app.use(companyIdFromHeaders)
 
 
 // Unauthenticated user log in routes
-app.use( "/v2", routes.authRouter)
+app.use( "/v1", routes.authRouter)
+// app.use( "/v1", routes.authRouter)
+app.use("/v1", routes.materialRouter)
+// app.use("/v1", authenticateToken, routes.materialRouter)
+
+
 
 
 
