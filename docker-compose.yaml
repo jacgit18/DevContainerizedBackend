@@ -1,4 +1,4 @@
-version: '3.5'
+version: '3.9'
 services:
   server:
     container_name: server
@@ -22,6 +22,21 @@ services:
     depends_on:
       - postgres
 
+  client:
+    container_name: client # testing out
+    image: josh/nextjs_app:1.0.0
+    build:
+      context: .
+      dockerfile: ./frontend/Dockerfile
+    volumes:
+      - './frontend:/usr/app/frontend'
+    ports:
+      - "3000:3000"
+    environment:
+      NEXT_PUBLIC_API_URL: "http://server:8081/api"  # Assuming your backend API runs on the server service
+    depends_on:
+      - server
+
   postgres:
     container_name: postgres_DB
     image: postgres:latest
@@ -41,6 +56,7 @@ services:
 
 volumes:
   pgdata: {}
+
 
 #   server:
     # build:
