@@ -17,7 +17,8 @@ interface PerformanceMonitoringItem {
   query_params?: any,
   body?: any,
   appuser?: string,
-  company_id?: string,
+  // company_id?: string,
+  appuser_id?: string,
   res_status?: number,
   // alerts update
   for_alerts?: boolean,
@@ -97,9 +98,12 @@ export class PerformanceMonitoringService {
         pmItem.appuser = req.user?.id
       }
       // this is a weird thing the frontend does if we dont prevent it, can cause this to crash
-      if (!!req.company_id && req.company_id !== 'null') {
-        pmItem.company_id = req.company_id
+      if (!!req.appuser_id && req.appuser_id !== 'null') {
+        pmItem.appuser_id = req.appuser_id
       }
+      // if (!!req.company_id && req.company_id !== 'null') {
+      //   pmItem.company_id = req.company_id
+      // }
       pmItem.res_status = res.statusCode
       pmItem.res_time_in_ms = (new Date()).getTime() - pmItem.started_at.getTime()
       this.addItem(pmItem).then(/* intentionally blank */)

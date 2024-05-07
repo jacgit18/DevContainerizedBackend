@@ -20,6 +20,7 @@ const convertQueryOperators = (request, response, next) => {
       }
     }
   }
+
   next()
 }
 
