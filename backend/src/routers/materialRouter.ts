@@ -1,5 +1,6 @@
-import {routerFactory, RouterEntry} from "./util.js"
-import {materialController} from "../controllers/index.js"
+import { materialController } from "../controllers/index.js"
+import { RouterEntry, routerFactory } from "./util.js"
+
 
 const materialRoutes: RouterEntry[] = [
   {

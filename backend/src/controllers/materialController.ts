@@ -3,12 +3,18 @@ import { Material } from '../model/index.js'
 import { materialService } from "../services/index.js"
 import { TfRequest } from "../types/express.js"
 import { addErrorHandlingToController, HttpError } from "../utils/error.js"
-import { FieldSpecForValidation, validateCompanyId, validateFields, validateQueryParams } from "./req-data-validation/index.js"
-import { validateMaterialId } from "./req-data-validation/materialValidation.js"
+import { FieldSpecForValidation, validateAppUserId, validateFields, validateQueryParams } from "./req-data-validation/index.js"
 
 
 async function createMaterials(req: TfRequest, res: express.Response): Promise<void> {
-  const {company_id} = validateCompanyId(req.company_id)
+  // company id now appuser_id
+  // const {company_id} = validateCompanyId(req.company_id)
+
+  const {appuser_id} = validateAppUserId(req.appuser_id)
+
+
+
+
   // const canAddMaterials = await materialAuth.createMaterials(req.user, company_id as string)
   if (true) {
     const fieldSpecsForValidation: FieldSpecForValidation[] = Material.fieldDefinitions.map((fs) => {
@@ -19,8 +25,9 @@ async function createMaterials(req: TfRequest, res: express.Response): Promise<v
     })
     // validate inputs
     const validatedMaterials = validateFields(req.body, fieldSpecsForValidation)
+
     // const createdMaterials = await materialService.createMaterials(company_id as string, validatedMaterials, req.user.id)
-    const createdMaterials = await materialService.createMaterials(company_id as string, validatedMaterials)
+    const createdMaterials = await materialService.createMaterials(appuser_id as string, validatedMaterials)
 
     res.send(createdMaterials)
   } else {
@@ -31,11 +38,15 @@ async function createMaterials(req: TfRequest, res: express.Response): Promise<v
 
 async function getMaterials(req: TfRequest, res: express.Response): Promise<void> {
   // need to validate company id first
-  const {company_id} = validateCompanyId(req.company_id)
+  // const {company_id} = validateCompanyId(req.company_id)
+  const {appuser_id} = validateAppUserId(req.appuser_id)
+
   // const hasAccessToMaterials: boolean = await materialAuth.getMaterials(req.user, company_id as string)
   if (true) {
     // no filter for admins
-    const filter: any = {company_id}
+    // const filter: any = {company_id}
+    const filter: any = {appuser_id}
+
     const validatedQueryParams = validateQueryParams(req.query, Material.fieldDefinitions)
     const materials = await materialService.getMaterials(filter, validatedQueryParams)
     res.send(materials)
@@ -46,10 +57,15 @@ async function getMaterials(req: TfRequest, res: express.Response): Promise<void
 
 
 async function updateMaterial(req: TfRequest, res: express.Response): Promise<void> {
-  const {company_id} = validateCompanyId(req.company_id)
+  // const {company_id} = validateCompanyId(req.company_id)
+  const {appuser_id} = validateAppUserId(req.appuser_id)
+
   // const isAllowedToUpdateMaterial = await materialAuth.isAllowedToUpdateMaterial(req.user.id, company_id)
   if(true){
-    await validateMaterialId(req.params.id)
+    console.log("TTT  ", req.params.id)
+
+    // await validateMaterialId(req.params.id) // weird behavoir might be issue with tables 
+    //but passing request 
     const fieldSpecsForValidation: FieldSpecForValidation[] = Material.fieldDefinitions.filter((fs) =>
       fs.canBeModifiedByUser
     ).map((fs) => {

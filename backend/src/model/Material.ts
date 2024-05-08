@@ -1,4 +1,4 @@
-import {FieldSpec} from "./Model.js"
+import { FieldSpec } from "./Model.js"
 
 export const fieldDefinitions:  FieldSpec[] = [
   {
@@ -8,13 +8,20 @@ export const fieldDefinitions:  FieldSpec[] = [
     returnFromDbQuery: true,
     canBeModifiedByUser: false
   },
-  {
-    name: 'company_id',
+    {
+    name: 'appuser_id',
     type: 'UUID',
     requiredForCreateRequest: false,
     returnFromDbQuery: true,
     canBeModifiedByUser: false
   },
+  // {
+  //   name: 'company_id',
+  //   type: 'UUID',
+  //   requiredForCreateRequest: false,
+  //   returnFromDbQuery: true,
+  //   canBeModifiedByUser: false
+  // },
   {
     name: 'is_active',
     type: 'boolean',

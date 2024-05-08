@@ -3,11 +3,11 @@ import { materialData } from "../data/index.js"
 import { Material } from '../model/index.js'
 import { columnsReturnedFromDbQuery } from "../model/Model.js"
 
-async function createMaterials(company_id: string, material: any, userID?: string): Promise<any> {
+async function createMaterials(appuser_id: string, material: any): Promise<any> {
   material.date_created = new Date()
   material.date_modified = new Date()
-  material.company_id = company_id
-  material.created_by = userID
+  material.appuser_id = appuser_id
+  // material.created_by = userID
 
   return materialData.createMaterial(
     material,

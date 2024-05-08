@@ -338,7 +338,12 @@ export function validateCompanyAndProjectId(
 }
 
 export async function validateDataObjectExistence(tableName: string, objId: string): Promise<boolean> {
+
+  // console.log(db(tableName).select('id').where('id', objId))// for some reason comes back false
+
   const obj = (await db(tableName).select('id').where('id', objId))[0]
+
+
   return obj != null
 }
 
