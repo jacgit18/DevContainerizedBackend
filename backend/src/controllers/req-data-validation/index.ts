@@ -326,6 +326,10 @@ export function validateCompanyId(companyId: string): {company_id: string} {
   return validateUuids({company_id: companyId})
 }
 
+export function validateAppUserId(appUserId: string): {appuser_id: string} {
+  return validateUuids({appuser_id: appUserId})
+}
+
 export function validateCompanyAndProjectId(
   companyId: string,
   projectId: string

@@ -4,7 +4,8 @@ import express from "express"
 export type TfRequest = express.Request & {
 //   user: JwtUserInfo,
 //   token: string,
-  company_id: string,
+  appuser_id: string,
+  // company_id: string,
 }
 
 
