@@ -22,6 +22,21 @@ if (!config.TESTING) {
   console.log("Since ", !config.TESTING ," means were not in testing env ")
   app.use(morgan("tiny")) // HTTP request logger
 }
+
+
+// Todo look into API Gateway middleware
+
+// Todo how would you identify were endpoint is appended to 
+// localhost url
+
+
+// use seperate build folders for frontend and backend builds
+
+// There is a dependency across features something needs to be
+// created within database sometimes in order to use a specific
+// feature.
+
+
 app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
