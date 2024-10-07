@@ -24,6 +24,7 @@ COPY backend/migrations /backend/migrations
 # RUN npx knex migrate:latest
 # Bug to fix
 # RUN npx knex migrate:latest --knexfile /backend/knexfile.js --cwd /backend
+# RUN npx knex migrate:latest --debug
 
 
 # Build the TypeScript project

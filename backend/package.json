@@ -6,9 +6,10 @@
     "node": ">=20.9.0",
     "npm": ">=10.1.0"
   },
-  "main": "src/app.ts",
+  "main": "src/serve.ts",
   "scripts": {
     "start": "nodemon ./build/src/serve.js",
+    "startA": "ts-node src/serve.ts",
     "build": "npm run clean && npm run compile-ts",
     "cbs": "npm run build && npm run start",
     "dev": "npm run clean && npm run compile-ts-watch-mode & npm run start",
